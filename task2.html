@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Определяем поваров и их специализации
+      const chefs = new Map();
+      chefs.set("Виктор", "Пицца");
+      chefs.set("Ольга", "Суши");
+      chefs.set("Дмитрий", "Десерты");
+
+      // Определяем блюда и их поваров
+      const dishes = new Map();
+      dishes.set("Пицца 'Маргарита'", "Виктор");
+      dishes.set("Пицца 'Пепперони'", "Виктор");
+      dishes.set("Суши 'Филадельфия'", "Ольга");
+      dishes.set("Суши 'Калифорния'", "Ольга");
+      dishes.set("Тирамису", "Дмитрий");
+      dishes.set("Чизкейк", "Дмитрий");
+
+      // Создаем объекты клиентов
+      const alexey = { name: "Алексей" };
+      const maria = { name: "Мария" };
+      const irina = { name: "Ирина" };
+
+      // Определяем заказы клиентов
+      const orders = new Map();
+      orders.set(alexey, ["Пицца 'Пепперони'", "Тирамису"]);
+      orders.set(maria, ["Суши 'Калифорния'", "Пицца 'Маргарита'"]);
+      orders.set(irina, ["Чизкейк"]);
+
+      // Функция для вывода информации о заказах и поварах
+      function printOrdersAndChefs(orders, dishes) {
+        orders.forEach((customerOrders, customer) => {
+          console.log(`Клиент ${customer.name} заказал:`);
+          customerOrders.forEach((dish) => {
+            const chef = dishes.get(dish);
+            console.log(`- ${dish} (Повар: ${chef})`);
+          });
+          console.log("");
+        });
+      }
+
+      // Выводим информацию
+      printOrdersAndChefs(orders, dishes);
+    </script>
+  </body>
+</html>
