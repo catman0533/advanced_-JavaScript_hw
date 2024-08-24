@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Система отзывов</title>
+  <style>
+    .review-container {
+      margin: 10px 0;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Отзывы</h1>
+
+  <label for="reviewText">Ваш отзыв:</label>
+  <textarea id="reviewText" rows="4" cols="50" placeholder="Оставьте ваш отзыв здесь..."></textarea>
+  <button id="submitReview">Оставить отзыв</button>
+  <div id="errorMessage" class="error"></div>
+
+  <h2>Существующие товары и отзывы</h2>
+  <div id="reviewsContainer"></div>
+
+ <script>
+
+const initialData = [
+  { product: "Apple iPhone 13", reviews: [{ id: "1", text: "Отличный телефон! Батарея держится долго." }, { id: "2", text: "Камера супер, фото выглядят просто потрясающе." }] },
+  { product: "Samsung Galaxy Z Fold 3", reviews: [{ id: "3", text: "Интересный дизайн, но дорогой." }] },
+  { product: "Sony PlayStation 5", reviews: [{ id: "4", text: "Люблю играть на PS5, графика на высоте." }] },
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+  const reviewsContainer = document.getElementById("reviewsContainer");
+  
+  // Функция для рендеринга начальных отзывов
+  function renderInitialData(data) {
+    data.forEach(item => {
+      const productDiv = document.createElement("div");
+      productDiv.className = "review-container";
+      productDiv.innerHTML = `<h3>${item.product}</h3>`;
+      
+      item.reviews.forEach(review => {
+        const reviewParagraph = document.createElement("p");
+        reviewParagraph.textContent = review.text;
+        productDiv.appendChild(reviewParagraph);
+      });
+      
+      reviewsContainer.appendChild(productDiv);
+    });
+  }
+  
+  renderInitialData(initialData);
+
+  const submitButton = document.getElementById("submitReview");
+  const reviewText = document.getElementById("reviewText");
+  const errorMessage = document.getElementById("errorMessage");
+
+  submitButton.addEventListener("click", () => {
+    try {
+      addReview(reviewText.value);
+      reviewText.value = '';  // очистка поля
+      errorMessage.textContent = '';  // очистка сообщений об ошибке
+    } catch (error) {
+      errorMessage.textContent = error.message;
+    }
+  });
+
+  function addReview(text) {
+    if (text.length < 50 || text.length > 500) {
+      throw new Error("Длина отзыва должна быть от 50 до 500 символов.");
+    }
+
+    // Для демонстрации добавим отзыв под "Apple iPhone 13"
+    const productDiv = document.querySelector(".review-container");
+    const reviewParagraph = document.createElement("p");
+    reviewParagraph.textContent = text;
+    productDiv.appendChild(reviewParagraph);
+  }
+});
+
+
+
+ </script>
+</body>
+</html>
